@@ -80,3 +80,64 @@ sumar(numerosArray);
 
 const numeros2 = [1,2,3,4,5,6,7,8]
 console.log(...numeros2)
+
+//Closures (Clausuras)
+
+function crearContador(){
+    let contador = 0;
+    return function (){
+        contador++;
+        console.log(`Contador en: ${contador}`)
+        for(let i = 0; i < 10; i++){
+            contador++;
+            console.log(`Ahora el contador está en: ${contador}`)
+        }
+    }
+}
+
+const contador1 = crearContador();
+contador1();
+
+//Recursividad Función que se llama a sí misma
+
+//Capturar factorial
+
+function funcionRecursiva(numfactorial){
+    if (numfactorial <= 1){
+        return 1
+    }
+    return numfactorial * funcionRecursiva(numfactorial - 1)
+}
+
+console.log(funcionRecursiva(4))
+
+//funciones parciales
+
+function sumaCompuesta (varFija){
+    
+    return function(resto){
+        return varFija + sumar(resto)
+    }
+}
+
+const sumarCon = sumaCompuesta(4)
+let arraySuma = [2,3,4,5,1,2,5,34]
+console.log(sumarCon(arraySuma))
+
+//Currying transormar función de varios parámetros a una secuencia de funciones de un argumento
+
+function sumaCurry(a){
+    return function (b){
+        return function (c){
+            return a + b + c;
+        }
+    }
+}
+
+const sumarCurriandoAB = sumaCurry(2)(3)
+const SumarCurriandoA = sumaCurry(2)
+console.log(sumarCurriandoAB(3))
+console.log(SumarCurriandoA(3)(1))
+
+//Callbacks
+
