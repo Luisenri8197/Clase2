@@ -64,7 +64,7 @@ controlador.saludarObjetoArrow();
 
 //Parámetros Rest (...)
 
-function sumar(numeros){
+function sumar(...numeros){
     console.log(numeros)
     let acc = 0
     for (let numero of numeros){        
@@ -141,3 +141,19 @@ console.log(SumarCurriandoA(3)(1))
 
 //Callbacks
 
+function procesador(dato, callback){
+    const resultado = sumar(...dato)
+    callback(resultado)
+}
+
+function procesarResultado(resultado){
+    console.log(resultado)
+}
+
+function procesarResultado2(resultado){
+    console.log(`Tengo ${resultado} mil razones pa que no me multe agente`)
+}
+
+procesador([2,3,4,5,6], procesarResultado)
+procesador([2,3,4,5,6], procesarResultado2)
+procesador([2,3,4,5,6], (resultado) => console.log(`Armando! Devolveme mis ${resultado} mil completos sapo perro!`))
