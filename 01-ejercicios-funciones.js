@@ -63,9 +63,74 @@ if (resultadoPrimos.length === 0){
 
 // 2. Implementa una función currificada que multiplique 3 números
 
+function multiplicacionDe3(a){
+    return function (b){
+        return function (c){
+            return a * b * c;
+
+        }
+    }
+}
+
+let x = 2
+let y = 2
+let z = 3
+
+const multiABC = multiplicacionDe3(x)(y)(z)
+
+console.log(`El valor de multiplicar ${x}, ${y} y ${z} es: ${multiABC}`)
+
 // 3. Desarrolla una función recursiva que calcule la potencia de un número elevado a un exponente
 
+function potenciaDeNum(a, n) {
+    if(n === 0){
+        return 1
+    }
+    return a * potenciaDeNum(a, n - 1)
+}
+
+console.log(`El valor de ${x} elevado a la ${y} es:`, potenciaDeNum(x,y))
+
+//Solución del IA - Dividir el valor que ingresa como n
+
+function potenciaRapida(a, n) {
+    if (n === 0) return 1;
+    if (n % 2 === 0) {
+        let mitad = potenciaRapida(a, n / 2);
+        return mitad * mitad;
+    } else {
+        return a * potenciaRapida(a, n - 1);
+    }
+}
+
+console.log(potenciaRapida(x, y));
+
+
 // 4. Crea una función createCounter() que reciba un valor inicial y retorne un objeto con métodos para increment(), decrement() y getValue(), utilizando un closure para mantener el estado
+
+function createCounter(n){
+    let counter = n;
+    return{
+        incrementar: function(){
+            counter++
+            return counter;
+        },
+        decrementar: function(){
+            counter--
+            return counter;
+        },
+        obtenerValor: function(){
+            return counter;
+        }
+    }
+}
+
+const contadorOpciones = createCounter(5)
+console.log("Obtener valor: ",contadorOpciones.obtenerValor())
+console.log("Incremento valor: ",contadorOpciones.incrementar())
+console.log("Obtengo valor: ",contadorOpciones.obtenerValor())
+console.log("Disminuyo valor: ", contadorOpciones.decrementar())
+console.log("Obtengo nuevo valor: ", contadorOpciones.obtenerValor())
 
 // 5. Crea una función sumManyTimes(multiplier, ...numbers) que primero sume todos los números (usando parámetros Rest) y luego multiplique el resultado por multiplier
 
