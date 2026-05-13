@@ -134,9 +134,43 @@ console.log("Obtengo nuevo valor: ", contadorOpciones.obtenerValor())
 
 // 5. Crea una función sumManyTimes(multiplier, ...numbers) que primero sume todos los números (usando parámetros Rest) y luego multiplique el resultado por multiplier
 
+function sumMuchasVeces(multiplicador, ...numeros){
+    let superSuma = numeros.reduce((acc, n) => acc + n, 0)
+    return superSuma * multiplicador;
+}
+
+let arrPrueba = [1,2,3,4]
+console.log(sumMuchasVeces(2, ...arrPrueba))
+
 // 6. Crea un Callback que se invoque con el resultado de la suma de todos los números que se le pasan a una función
 
+function sumaConCallback(callback, ...suma){
+    let sumaGrande = suma.reduce((acc, n) => acc + n, 0)
+    callback(sumaGrande)
+}
+
+function mostrarSumaGrande(sumaGrande){
+    console.log(`Parcero la suma de los números que me pasó es: ${sumaGrande}, su mamita por si acaso`)
+}
+
+sumaConCallback(mostrarSumaGrande, ...arrPrueba)
+
 // 7. Desarrolla una función parcial
+
+function restaParcial(valorFijo){
+    return function(restoDeValores){
+        let acc = sumMuchasVeces(1,...restoDeValores)
+        if ( acc > valorFijo) {
+            let resultado = valorFijo - acc;
+            return console.log(`Pana el resultado dá negativo pille: ${resultado}`);
+        }
+        resultado = valorFijo - acc;
+        return console.log(`Pana el valor es positivo o cero pille: ${resultado}`);
+    }
+}
+
+const restarVariableFija = restaParcial(25)
+restarVariableFija(arrPrueba)
 
 // 8. Implementa un ejemplo que haga uso de Spread
 
