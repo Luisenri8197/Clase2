@@ -100,10 +100,36 @@ console.log(diferenciaSets)
 
 // 6. Itera los resultados del ejercicio anterior
 
+unionSets.forEach(e => console.log(e))
+
 // 7. Crea un mapa que almacene información se usuarios (nombre, edad y email) e itera los datos
+
+const usuarios = new Map([
+  ["nombre", ["Luis","Carlos","Ximena", "Carla"]],
+  ["edad", [23, 5, 10, 20]],
+  ["email", "Luis@gmailo.como"]
+])
+
+usuarios.forEach((valor, clave) => console.log(`La clave ${clave} tiene el valor ${valor}`))
 
 // 8. Dado el mapa anterior, crea un array con los nombres
 
-// 9. Dado el mapa anterior, obtén un array con los email de los usuarios mayores de edad y transfórmalo a un set
+const arrayNombres = Array.from(usuarios.get("nombre"))
+console.log(arrayNombres)
+
+// 9. Dado el mapa anterior, obtén un array con los nombres de los usuarios mayores de edad y transfórmalo a un set
+
+function arrayUsuarios(usuarios){
+  if (!(usuarios instanceof Map)){
+    return console.log("No es un Map")
+  }
+  const nombres = usuarios.get("nombre")
+  const edades = usuarios.get("edad")
+  const nombresMayores = nombres.filter((nombre, i) => edades[i] > 18 )
+  return nombresMayores
+  
+}
+const setMayoresEdad = new Set(arrayUsuarios(usuarios))
+console.log(setMayoresEdad)
 
 // 10. Transforma el mapa en un objeto, a continuación, transforma el objeto en un mapa con clave el email de cada usuario y como valor todos los datos del usuario
