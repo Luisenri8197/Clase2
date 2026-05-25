@@ -158,5 +158,80 @@ console.log(pajaro)
 pajaro.hacerSonido()
 pajaro.volar()
 
-// Patrones singletones
+// ------- Patrones de Diseño --------
 
+//Singleton
+
+class Sesion{
+    constructor(nombre){
+        if(Sesion.instance){
+            return Sesion.instance;
+        }
+        this.nombre = nombre;
+        Sesion.instance = this
+    }
+    saludar() {
+        console.log(`Hola mi nombre es ${this.nombre}`)
+    }
+}
+
+const sesionLuis = new Sesion("Luisito")
+const sesionLuis2 = new Sesion("Carlos")
+console.log("Es la sesión 1 y 2 igual?: " + (sesionLuis===sesionLuis2))
+sesionLuis.saludar()
+sesionLuis2.saludar()
+
+//Symbol
+
+const ID = Symbol("id")
+
+class usuario {
+    constructor(nombre){
+        this.nombre = nombre;
+        this[ID] = Math.random(); 
+    }
+}
+
+const usuario1 = new usuario("Camila")
+console.log(usuario1.nombre)
+console.log(usuario1.ID)
+
+// instanceOf
+
+class Carro {}
+
+const camion = new Carro("Renoult")
+console.log("camion es instancia de Carro?: " + (camion instanceof Carro))
+
+//Create
+
+const sedan = Object.create(Carro.prototype)
+console.log("sedan es instancia de Carro?: " + (sedan instanceof Carro))
+
+//proxy Inteceptar y modificar el comportamiento de las clases
+
+const ClaseProxy = {
+    get(target, propiedad){
+        console.log(`Es es el get con la propiedad ${propiedad}`)
+        return target[propiedad]
+    },
+    set (target, propiedad, valor){
+        if(propiedad === "balance" && valor < 0){
+            throw new Error("Esta cuenta bancaria no puede estár en negativos mi perro")
+        }
+        target[propiedad] = valor
+    }
+}
+
+class CuentaBanco {
+    constructor(balance){
+        this.balance = balance;
+    }
+}
+
+const cuentaLuis = new CuentaBanco(100);
+console.log(cuentaLuis.balance)
+const cuentaProxy = new Proxy(new CuentaBanco(200), ClaseProxy)
+console.log(cuentaProxy.balance)
+cuentaProxy.balance = 100
+console.log(cuentaProxy.balance)
