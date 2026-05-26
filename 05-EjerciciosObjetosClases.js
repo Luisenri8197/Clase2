@@ -128,11 +128,159 @@ computador.marca = "WAIO"
 console.log(computador.marca)
 
 // 5. Utiliza la operación assign en un objeto
+console.log("---------- Ejercicio 5 -----------")
+
+const tienda = {
+    nombre: "Kwikimart",
+    ciudad: "Cali",
+    empleados: 5,
+    cantidadEmpleados: function(){
+        console.log(`Los empleados de ${this.nombre} actualmente son ${this.empleados}`)
+    }
+}
+
+const ciudadTienda = {
+    ciudadTienda: function(){
+        console.log(`La tienda ${this.nombre} se encuentra ubicada en ${this.ciudad}`)
+    }
+}
+
+Object.assign(tienda, ciudadTienda)
+tienda.cantidadEmpleados()
+tienda.ciudadTienda()
 
 // 6. Crea una clase abstracta
 
+console.log("---------- Ejercicio 6 -----------")
+
+class Computador{
+    constructor(tipo){
+        if(new.target === Computador){
+            throw new Error ("No se puede instanciar esta clase")
+        }
+        this.tipo = tipo;
+    }
+    encender(){
+        throw new Error ("Método no accesible, debe implementarlo la subclase")
+    }
+}
+
+class Portatil extends Computador{
+    constructor(tipo, marca){
+        super(tipo)
+        this.marca = marca
+    }
+    encender(){
+        console.log(`El ${this.tipo} se esta encendiendo`)
+    }
+
+    desplazar(){
+        console.log(`El ${this.tipo} de la marca ${this.marca} se está desplazando del punto A al B`)
+    }
+}
+
+class PCEscritorio extends Computador{
+    encender(){
+        console.log(`El ${this.tipo} se esta encendiendo`)
+    }
+}
+
+const portatilLenovo = new Portatil("Portatil", "Lenovo")
+const MSIEscritorio = new PCEscritorio("PC Escritorio")
+portatilLenovo.encender()
+portatilLenovo.desplazar()
+MSIEscritorio.encender()
+
 // 7. Utiliza polimorfismo en dos clases diferentes
 
+console.log("---------- Ejercicio 7 -----------")
+
+
+class ConfiguracionGlobal {
+    constructor(nombre){
+        if(ConfiguracionGlobal.instancia){
+            return ConfiguracionGlobal.instancia
+        }
+        this.nombre = nombre
+        ConfiguracionGlobal.instancia = this
+    }
+    modoOscuro(){
+        console.log("Activando modo oscuro")
+    }
+}
+
+class Dispositivo{
+    constructor(modelo){
+        if(new.target === Dispositivo){
+            throw new Error ("Esta clase no se debe instanciar")
+        }
+        if(typeof modelo !== "string"){
+            throw new Error (`El valor ingresado no es valido vaya a por ayuda bruto`)
+        }
+        this.modelo = modelo
+    }
+    encender(){
+        throw new Error ("Método a implementar por la subclase")
+    }
+}
+
+class PortatilUltraLiviano extends Dispositivo{
+    encender(){
+        console.log(`El portatil ultraliviano modelo ${this.modelo} se está encendiendo madafakas`)
+    }
+}
+
+class PortatilEstandar extends Dispositivo{
+    encender(){
+        console.log(`El portatil estándar modelo ${this.modelo} se está encendiendo madafakas`)
+    }
+}
+
+class Tablet extends Dispositivo{
+    encender(){
+        console.log(`la tablet megachulística modelo ${this.modelo} se está encendiendo madafakas`)
+    }
+}
+
+const tabletSamsung = new Tablet("Samsung")
+const portatilUltraMSI = new PortatilUltraLiviano("MSI")
+const portatilHP = new PortatilEstandar("Jiuler pakar")
+tabletSamsung.encender()
+portatilUltraMSI.encender()
+portatilHP.encender()
+
+const conexiónMixin = {
+    conectarWifi: function(){
+        console.log(`El dispositivo ${this.modelo} se está conectando al Wifi...`)
+    },
+    conectarBluetooth: function(){
+        console.log(`El dispositivo ${this.modelo} se está conectando al Bluetooth...`)
+    }
+}
+
+Object.assign(Dispositivo.prototype, conexiónMixin)
+portatilHP.conectarWifi()
+portatilUltraMSI.conectarBluetooth()
+console.log(typeof tabletSamsung.modelo)
+if(typeof tabletSamsung.modelo === "string"){
+    console.log("La tablet es string")
+}
+
+const validarTipo = {
+    get(target, propiedad){
+        return target[propiedad]
+    },
+    set(target, propiedad, valor){
+        if(typeof valor !== "string"){
+            throw new Error ("Tipo de dato no soportado")
+        }
+        target[propiedad] = valor
+    }
+}
+const portatilAMDProxy = new Proxy(new PortatilEstandar("PC SuperGaming"), validarTipo)
+console.log(portatilAMDProxy.modelo)
+portatilAMDProxy.modelo = "Guacamaya"
+console.log(portatilAMDProxy.modelo)
 // 8. Implementa un Mixin
 
 // 9. Crea un Singleton
